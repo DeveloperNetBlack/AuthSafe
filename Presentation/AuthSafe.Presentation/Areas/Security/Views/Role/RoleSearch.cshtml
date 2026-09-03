@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+<div class="card-body border-bottom-dashed border-bottom">
+    <form> 
+        <div class="row  g-3 pb-2">
+            <div class="col-sm-4">
+                <label for="txtsRolName">Nombre Rol</label>
+                <input type="text" class="form-control" id="stxtRoleName" name="sRolName" />
+            </div>
+            <div class="col-sm-4">
+                <label for="scboStateID">Estado</label>
+                <select class="form-select" id="scboStateID" name="sStateID">
+                    <option value="10">Todos</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+            </div>
+            @*
+            <div class="col-sm-4">
+                <label>&nbsp;</label>
+                <div class="row g-3">
+                    <div class="col-sm-6">                    
+                        <button type="button" class="btn btn-info w-100" id="sbtnBuscar"><i class="ri-search-line search-icon me-2 align-bottom"></i>Buscar</button>
+                    </div> 
+                </div>
+            </div
+            *@
+        </div>
+    </form>
+</div>
+<div class="card-body">
+    <div class="table-responsive table-card p-1">
+        <table class="table align-middle" id="dtRol">
+            <thead class="table-light text-muted">
+                <tr>
+                    <td class="text-center">ID</td>
+                    <td class="text-center">Código</td>
+                    <td class="text-center">Nombre rol</td>
+                    <td class="text-center">Estado</td>
+                    <td class="text-center">Última fecha</td>
+                    <td class="text-center">Último usuario </td>        
+                    <td class="text-center" colspan="3" style="width:12%">Opciones</td>
+                </tr>
+            </thead>
+            <tbody id="details-list"> 
+            </tbody>
+        </table>
+    </div>
+</div>

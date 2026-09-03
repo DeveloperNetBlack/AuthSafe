@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/ApplicationCore/">
+    <Project Path="ApplicationCore/AuthSafe.ApplicationService/AuthSafe.ApplicationService.csproj" Id="70e8444b-46b5-4daa-ab53-956a64c25510" />
+    <Project Path="ApplicationCore/AuthSafe.DomainModel/AuthSafe.DomainModel.csproj" Id="d33e85ff-e8f0-4136-acd3-62001d9cb760" />
+    <Project Path="ApplicationCore/AuthSafe.DomainService/AuthSafe.DomainService.csproj" Id="2c7e68dd-86df-4155-a20a-37112046ee55" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/AuthSafe.Infrastructure.CrossCutting/AuthSafe.Infrastructure.CrossCutting.csproj" Id="4dcfbd02-6c56-4f66-9f0a-bf715ce9db6c" />
+    <Project Path="Infrastructure/AuthSafe.Infrastructure.DB/AuthSafe.Infrastructure.DB.csproj" Id="f1170722-6493-422a-b919-adb82de39afb" />
+    <Project Path="Infrastructure/AuthSafe.Infrastructure.GeneralService/AuthSafe.Infrastructure.GeneralService.csproj" Id="cc6d32d5-c6bf-4e1e-bd07-86602e0cfc18" />
+  </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="Presentation/AuthSafe.Presentation.Api/AuthSafe.Presentation.Api.csproj" Id="c2b32cb0-d86e-4fbb-b7b8-716df6f600f1" />
+    <Project Path="Presentation/AuthSafe.Presentation/AuthSafe.Presentation.csproj" Id="d0de75c6-b32c-4059-aa39-ddf8f4ee0f2b" />
+  </Folder>
+</Solution>

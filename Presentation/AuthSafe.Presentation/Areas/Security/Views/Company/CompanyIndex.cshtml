@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "EMPRESA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card" id="company-card">
+    <div class="card-body p-0">
+        <ul class="nav nav-tabs nav-border-top nav-border-top-primary mb-3" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#tab-search" role="tab" aria-selected="true">
+                    <i class="ri-list-ordered align-middle me-1 fs-20"></i>
+                    Busqueda Empresa
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-register" role="tab" aria-selected="false">
+                    <i class="ri-book-3-fill align-middle me-1 fs-20"></i>
+                    Formulario Empresa
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-info" role="tab" aria-selected="false">
+                    <i class=" ri-settings-2-fill align-middle me-1 fs-20"></i>
+                    Info Adicional Empresa
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content text-muted">
+            <div class="tab-pane active" id="tab-search" role="tabpanel">
+                <partial name="CompanySearch" />
+            </div>
+            <div class="tab-pane" id="tab-register" role="tabpanel">
+                <partial name="CompanyForm" />
+            </div>
+            <div class="tab-pane" id="tab-info" role="tabpanel">
+                <div class="row p-3">
+                    <div class="col-sm-9">
+                        <div class="row pb-2">
+                            <label class="col-sm-2 col-form-label">Razón social</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="txtCompanySocialReasonInfo" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <label class="col-sm-3 col-form-label">Estructura Pagina</label>
+                        <div class="col-sm-6 border" id="div-treeview-page" style=" overflow: hidden scroll;max-height: 420px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 pb-4 mt-3">
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light" id="btnCompanyReturn"><i class="ri-reply-fill align-bottom me-1 fs-13"></i>&nbsp;Retornar&nbsp;</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" id="btnCompanyAsignarPage"><i class="ri-check-fill align-bottom me-1 fs-13"></i><span>Asignar</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript" src="~/scripts/Areas/Security/CompanyIndex.js?v=1.0"></script>
+}

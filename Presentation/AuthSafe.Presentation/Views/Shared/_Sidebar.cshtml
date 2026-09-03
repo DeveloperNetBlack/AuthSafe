@@ -1,0 +1,107 @@
+﻿@{
+    Layout = null;
+}
+<div class="app-menu navbar-menu">
+    <div class="navbar-brand-box">
+        @*Dark Logo*@
+        <a href="index.html" class="logo logo-dark">
+            <span class="logo-sm">
+                <img src="assets/images/logo-sm.png" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="assets/images/logo-dark.png" alt="" height="17">
+            </span>
+        </a>
+        @*Light Logo*@
+        <a href="index.html" class="logo logo-light">
+            <span class="logo-sm">
+                <img src="assets/images/logo-sm.png" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="assets/images/logo-light.png" alt="" height="17">
+            </span>
+        </a>
+        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+            <i class="ri-record-circle-line"></i>
+        </button>
+    </div>
+
+    <div id="scrollbar">
+        <div class="container-fluid">
+            <div id="two-column-menu"></div>
+            <ul class="navbar-nav" id="navbar-nav">
+                <li class="menu-title"><span data-key="t-menu">PANEL</span></li>
+                @Menus(0)
+            </ul>
+        </div>
+    </div>
+
+    <div class="sidebar-background"></div>
+</div>
+
+@functions {
+@using AuthSafe.Presentation.Extensions
+@using AuthSafe.Presentation.Helpers
+@using AuthSafe.Presentation.Models.RolePermission
+@using Microsoft.AspNetCore.Html
+
+public IHtmlContent Menus(int PageParentID)
+{
+    var Controller = Context.Request.Path.ToString().TrimStart('/');
+    var Pages = Context.Session.GetObject<List<RolePermissionListResponseModel>>(ConstantsHelper.SessionKeys.MenuSidebar);
+    string sideBar = "";
+    if (Pages is not null)
+    {
+        var List = Pages.Where(w => w.IdPageParent == PageParentID).OrderBy(ord => ord.PageOrder).ToList();
+        if (List.Any())
+        {
+            foreach (var item in List)
+            {
+                if (string.IsNullOrWhiteSpace(item.PageIconName) && item.IdPageParent == 0)
+                {
+                    item.PageIconName = "fal fa-edit";
+                }
+
+                string clase = string.Empty;
+                string collapsed = string.Empty;
+
+                if (Pages.Any(s => s.PageUrlName.Equals(Controller) && s.IdPage == item.IdPage))
+                {
+                    clase = "active";
+                }
+                else if (Pages.Any(s => s.PageUrlName.Equals(Controller) && s.PageHierarchy.StartsWith(item.PageHierarchy)))
+                {
+                    clase = "active";
+                    collapsed = "collapsed active";
+                }
+
+                sideBar += "<li class='nav-item'>";
+
+                var SubList = Pages.Where(w => w.IdPageParent == item.IdPage).ToList();
+                if (SubList.Any())
+                {
+                    sideBar += "<a class='nav-link menu-link " + collapsed + "' href='#sidebar-" + item.PageName.Replace(" ", "-") + "' data-bs-toggle='collapse' role='button' aria-expanded='false' aria-controls='sidebar-" + item.PageName.Replace(" ", "-") + "'>";
+                    sideBar += "<i class='ri-account-circle-line'></i> <span data-key='t-" + item.PageName + "'>" + item.PageName + "</span>";
+                    sideBar += "</a>";
+
+                    sideBar += "<div class='collapse menu-dropdown " + (collapsed != string.Empty ? "show" : "") + "' id='sidebar-" + item.PageName.Replace(" ", "-") + "'>";
+                    sideBar += "<ul class='nav nav-sm flex-column'>";
+                    sideBar += this.Menus(item.IdPage);
+                    sideBar += "</ul>";
+                    sideBar += "</div>";
+                }
+                else
+                {
+                    sideBar += "<a " + (item.PageUrlName == "" ? "" : (item.PageUrlName == "#" ? "" : "href='" + Url.Content("~/" + item.PageUrlName) + "'")) + " class='nav-link " + clase + "' data-key='t-" + item.PageName + "'>";
+                    sideBar += "<i class='ri-account-circle-line'></i>" + item.PageName;
+                    sideBar += "</a>";
+                }
+
+                sideBar += "</li>";
+            }
+        }
+    }
+
+    return new HtmlString(sideBar);
+}
+}

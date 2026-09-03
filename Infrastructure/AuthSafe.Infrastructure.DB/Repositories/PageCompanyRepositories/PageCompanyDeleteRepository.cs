@@ -1,0 +1,37 @@
+﻿using AuthSafe.Infrastructure.DB.AppDBContext;
+using AuthSafe.Infrastructure.DB.Transactions;
+using AuthSafe.DomainService.IRepositories.IPageCompanyRepositories;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Options;
+using System.Data;
+
+namespace AuthSafe.Infrastructure.DB.Repositories.PageCompanyRepositories
+{
+    internal class PageCompanyDeleteRepository : IPageCompanyDeleteRepository
+    {
+        private readonly string ConnectionString;
+        private readonly ITransactionAccessor TransactionAccessor;
+        public PageCompanyDeleteRepository(IOptions<AppDbContext> Options, ITransactionAccessor TransactionAccessor)
+        {
+            ConnectionString = Options.Value.ConnectionSQLServer;
+            this.TransactionAccessor = TransactionAccessor;
+        }
+
+        public async Task<int> DeleteAsync(int CompanyID, CancellationToken CancellationToken = default)
+        {
+            int RecordAffected = 0;
+            var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken);
+            var Transaction = TransactionAccessor.CurrentTransaction;
+            using (SqlCommand Command = new SqlCommand())
+            {
+                Command.CommandText = "Security.uspPageCompanyDelete";
+                Command.CommandType = CommandType.StoredProcedure;
+                Command.Parameters.AddWithValue("@CompanyID", CompanyID);
+                Command.Connection = Connection;
+                Command.Transaction = Transaction;
+                RecordAffected = await Command.ExecuteNonQueryAsync(CancellationToken);
+            }
+            return RecordAffected;
+        }
+    }
+}
